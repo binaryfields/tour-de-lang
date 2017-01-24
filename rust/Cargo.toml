@@ -1,0 +1,10 @@
+[package]
+name = "rust-sxs"
+version = "1.0.0"
+authors = ["sebby2k@gmail.com"]
+
+[dependencies]
+futures = "0.1"
+serde = "0.8"
+serde_derive = "0.8"
+serde_json = "0.8"

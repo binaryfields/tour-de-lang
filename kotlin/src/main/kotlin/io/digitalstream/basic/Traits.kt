@@ -1,0 +1,16 @@
+/**
+ * Created by sebby on 9/25/16.
+ */
+package io.digitalstream.basic
+
+object Traits {
+
+  interface Similarity {
+    fun isSimilar(x: Any): Boolean
+    fun isNotSimilar(x: Any): Boolean = !isSimilar(x)
+  }
+
+  fun run(): Unit {
+
+  }
+}
