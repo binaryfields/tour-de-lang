@@ -2,7 +2,7 @@
 
 ## Overview
 
-lang-sxs is a point-by-point comparision between 4 modern programming languages. It focuses on main language features as well as a number of library aspects.
+lang-sxs is a point-by-point comparision between 5 modern programming languages. It focuses on main language features as well as a number of library aspects.
 
 ## TOC
 
@@ -45,6 +45,10 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
 
         (), bool, char, i8, i16, i32, i64, u8, u16, u32, u64, isize, usize, f32, f64
 
+* Dart
+
+        void, bool, int, double, String
+
 * TypeScript
 
         void, boolean, number, string
@@ -68,6 +72,12 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         let x = 5;
         let y: i32 = 5;
         let mut z = 5;
+
+* Dart
+
+        final x = 5;
+        final int y = 5;
+        var z = 5;
 
 * TypeScript
 
@@ -113,6 +123,18 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
             // ...
         }
 
+* Dart
+
+        final max = a > b ? a : b;
+        
+        for (var item in collection) {
+            // ...
+        }      
+
+        while (!done) {
+            // ...
+        }
+
 * TypeScript
 
         let max;
@@ -148,6 +170,12 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
 
         fn sum(a: i32, b: i32) -> i32 {
           a + b
+        }
+
+* Dart
+
+        int sum(int a, int b) {
+            return a + b;
         }
 
 * TypeScript
@@ -196,14 +224,30 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         impl Circle {
             fn new(x: f64, y: f64, radius: f64) -> Circle {
                 Circle {
-                    x: x,
-                    y: y,
-                    radius: radius,
+                    x,
+                    y,
+                    radius,
                 }
             }
 
             fn area(&self) -> f64 {
                 std::f64::consts::PI * (self.radius * self.radius)
+            }
+        }
+
+* Dart
+
+        import 'dart:math' as math;
+
+        class Circle {
+            final double x;
+            final double y;
+            final double radius;
+
+            Circle(this.x, this.y, this.radius);
+
+            double area() {
+                return math.pi * (radius * radius);
             }
         }
 
@@ -247,6 +291,13 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         trait Similarity {
           fn isSimilar(&self, x: Any) -> bool;
           fn isNotSimilar(&self, x: Any) -> bool { !isSimilar(x) }
+        }
+
+* Dart
+
+        abstract class Similarity {
+            bool isSimilar(Object x);
+            bool isNotSimilar(Object x) => !isSimilar(x);
         }
 
 * TypeScript
@@ -335,17 +386,22 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
 * Scala
 
         val num = 5
-        val plus_num = (x: Int) => x + num
+        val plusNum = (x: Int) => x + num
 
 * Kotlin
 
         val num = 5
-        val plus_num = { x: Int -> x + num }
+        val plusNum = { x: Int -> x + num }
 
 * Rust
 
         let num = 5;
         let plus_num = |x: i32| x + num;
+
+* Dart
+
+        final num = 5;
+        final plusNum = (int x) => x + num;
 
 * TypeScript
 
@@ -380,6 +436,19 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         impl<T: Clone> Point<T> {
             fn swap(&self) -> Point<T> {
                 Point { x: self.y.clone(), y: self.x.clone() }
+            }
+        }
+
+* Dart
+
+        class Point<T> {
+            final T x;
+            final T y;
+
+            const Point(this.x, this.y);
+
+            Point<T> swap()  {
+                return Point(y, x);
             }
         }
 
@@ -421,6 +490,31 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
             None,
         }
 
+* Dart
+
+        abstract class Option<T> {
+            T get value;
+            bool get has;
+        }
+
+        class Some<T> implements Option<T> {
+            @override
+            final T value;
+            @override
+            final bool has = true;
+
+            const Some(this.value);
+        }
+
+        class None<T> implements Option<T> {
+            @override
+            final T value = null;
+            @override
+            final bool has = false;
+
+            const None();
+        }
+
 * TypeScript
 
         class Some<T> {
@@ -460,11 +554,20 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
             None => println!("got none"),
         }
 
+* Dart
+
+        final option = Some("string");
+        if (option is Some) {
+            print("got value: ${option.value}");
+        } else if (option is None) {
+            print("got none");
+        }
+
 * TypeScript
 
-        if (option instanceof Enums.Some) {
+        if (option instanceof Option.Some) {
             console.log(`got value: ${option.value}`);
-        } else if (option instanceof Enums.None) {
+        } else if (option instanceof Option.None) {
             console.log("got none");
         }
 
@@ -492,6 +595,12 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         let ys = [0; 20];
         let x = xs[0];
         let length = xs.len();
+
+* Dart
+
+        final xs = [1, 2, 3];
+        final x = xs[0];
+        final length = xs.length;
 
 * TypeScript
 
@@ -523,6 +632,14 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         for item in result {
             println!("{}", item)
         }
+
+* Dart
+
+        final list = ['apples', 'bananas', 'oranges'];
+        list
+            .where((it) => it.startsWith("a"))
+            .map((it) => it.toUpperCase())
+            .forEach((item) => print("$item"));
 
 * TypeScript
 
@@ -568,6 +685,15 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
                 res
             })
             .wait();
+
+* Dart
+
+        try {
+            final res = await Future.value("string");
+            print("succeeded $res");
+        } catch (ex) {
+            print("failed $ex");
+        }
 
 * TypeScript
 
@@ -626,6 +752,33 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         let deserialized: Point = serde_json::from_str(&serialized).unwrap();
         println!("deserialized = {:?}", deserialized);
 
+* Dart
+
+        import 'dart:convert';
+
+        class Point {
+            final double x;
+            final double y;
+            
+            Point(this.x, this.y);
+
+            Point.fromJson(Map<String, dynamic> json)
+                : x = json['x'],
+                  y  = json['y'];
+
+            Map<String, dynamic> toJson() =>
+                {
+                    'x': x,
+                    'y': y,
+                };            
+        }
+
+        final point = Point(1.0, 2.0);
+        final serialized = jsonEncode(point);
+        print("serialized = $serialized");
+        final deserialized = Point.fromJson(jsonDecode(serialized));
+        print("deserialized = $deserialized");
+
 * TypeScript
 
         interface Point {
@@ -662,6 +815,13 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         let hello_world = hello + &world;
         println!("{}", hello_world);
 
+* Dart
+
+        final hello = "Hello ";
+        final world = "world!".toString();
+        final helloWorld = hello + world;
+        print(helloWorld);
+
 * TypeScript
 
         const hello = "Hello ";
@@ -689,6 +849,12 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
         let tuple2: (i32, &str) = (1, "hello");
         println!("tuple {}, {}", tuple.0, tuple.1)
 
+* Dart
+
+        final tuple = [1, "hello"];
+        final List<Object> tuple2 = [1, "hello"];
+        print("tuple ${tuple[0]}, ${tuple[1]}");
+
 * TypeScript
 
         let tuple = [1, "hello"];
@@ -697,13 +863,17 @@ lang-sxs is a point-by-point comparision between 4 modern programming languages.
 
 ## Reference
 
-### Rust Book
+### Dart
 
-* https://doc.rust-lang.org/book/
+- https://dart.dev/guides/language/language-tour
 
 ### Kotlin
 
 - https://kotlinlang.org/docs/reference/basic-types.html
+
+### Rust Book
+
+- https://doc.rust-lang.org/book/
 
 ### TypeScript
 
