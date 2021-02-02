@@ -2,23 +2,23 @@
 
 ## Overview
 
-lang-sxs is a point-by-point comparision between 5 modern programming languages. It focuses on main language features as well as a number of library aspects.
+toure-de-lang is a point-by-point comparision between 5 modern programming languages. It focuses on main language features as well as a number of library aspects.
 
 ## TOC
 
 * Language Basics
-  - Basic Types
   - Variables
-  - Flow Control
+  - Control Flow
+  - Basic Types
   - Functions
   - Classes
-  - Traits
   - Modules
 * Language Advanced
   - Closures
   - Generics
   - Enums
   - Pattern Matching
+  - Traits
 * Library
   - Arrays
   - Collections
@@ -30,28 +30,6 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
   - Testing?
 
 ## Language Basics
-
-### Basic Types
-
-* Scala
-
-    Unit, Boolean, Char, Byte, Short, Int, Long, Float, Double
-
-* Kotlin
-
-    Unit, Boolean, Char, Byte, Short, Int, Long, Float, Double
-
-* Rust
-
-    (), bool, char, i8, i16, i32, i64, u8, u16, u32, u64, isize, usize, f32, f64
-
-* Dart
-
-    void, bool, int, double, String
-
-* TypeScript
-
-    void, boolean, number, string
 
 ### Variables
 
@@ -95,7 +73,7 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
   let z = 5;
 ```
 
-### Flow Control
+### Control Flow
 
 * Scala
 
@@ -172,6 +150,28 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
   }
 ```
 
+### Basic Types
+
+* Scala
+
+    Byte, Short, Int, Long, Float, Double, Boolean, Char, Unit 
+
+* Kotlin
+
+    Byte, Short, Int, Long, Float, Double, Boolean, Char, Unit
+
+* Rust
+
+    i8, i16, i32, i64, u8, u16, u32, u64, isize, usize, f32, f64, bool, char, ()
+
+* Dart
+
+    int, double, bool, String, void
+
+* TypeScript
+
+    number, boolean, string, void
+
 ### Functions
 
 * Scala
@@ -219,16 +219,16 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
 * Scala
 
 ``` scala
-  object Circle {
-    def apply(x: Double, y: Double, radius: Double): Circle = {
-      new Circle(x, y, radius)
-    }
-  }
-
   class Circle(val x: Double, val y: Double, val radius: Double) {
 
     def area(): Double = {
       Math.PI * (radius * radius)
+    }
+  }
+
+  object Circle {
+    def apply(x: Double, y: Double, radius: Double): Circle = {
+      new Circle(x, y, radius)
     }
   }
 ```
@@ -237,12 +237,12 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
 
 ``` kotlin
   class Circle(val x: Double, val y: Double, val radius: Double) {
-    companion object {
-      fun create(): Circle = Circle(0.0, 0.0, 2.0)
-    }
-
     fun area(): Double {
       return Math.PI * (radius * radius)
+    }
+
+    companion object {
+      fun create(): Circle = Circle(0.0, 0.0, 2.0)
     }
   }
 ```
@@ -277,11 +277,11 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
   import 'dart:math' as math;
 
   class Circle {
+    const Circle(this.x, this.y, this.radius);
+
     final double x;
     final double y;
     final double radius;
-
-    Circle(this.x, this.y, this.radius);
 
     double area() {
       return math.pi * (radius * radius);
@@ -307,51 +307,6 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
       return Math.PI * (this.radius * this.radius);
     }
   }
-```
-
-### Traits
-
-* Scala
-
-``` scala
-  trait Similarity {
-    def isSimilar(x: Any): Boolean
-    def isNotSimilar(x: Any): Boolean = !isSimilar(x)
-  }
-```
-
-* Kotlin
-
-``` kotlin
-  interface Similarity {
-    fun isSimilar(x: Any): Boolean
-    fun isNotSimilar(x: Any): Boolean = !isSimilar(x)
-  }
-```
-
-* Rust
-
-``` rust
-  TODO any
-  trait Similarity {
-    fn isSimilar(&self, x: Any) -> bool;
-    fn isNotSimilar(&self, x: Any) -> bool { !isSimilar(x) }
-  }
-```
-
-* Dart
-
-``` dart
-  abstract class Similarity {
-    bool isSimilar(Object x);
-    bool isNotSimilar(Object x) => !isSimilar(x);
-  }
-```
-
-* TypeScript
-
-``` typescript
-  TODO
 ```
 
 ### Modules
@@ -465,8 +420,8 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
 * Dart
 
 ``` dart
-  final num = 5;
-  final plusNum = (int x) => x + num;
+  final n = 5;
+  final plusNum = (int x) => x + n;
 ```
 
 * TypeScript
@@ -517,12 +472,12 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
 
 ``` dart
   class Point<T> {
+    const Point(this.x, this.y);
+
     final T x;
     final T y;
 
-    const Point(this.x, this.y);
-
-    Point<T> swap()  {
+    Point<T> swap() {
       return Point(y, x);
     }
   }
@@ -583,21 +538,21 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
   }
 
   class Some<T> implements Option<T> {
+    const Some(this.value);
+
     @override
     final T value;
     @override
     final bool has = true;
-
-    const Some(this.value);
   }
 
   class None<T> implements Option<T> {
+    const None();
+
     @override
     final T value = null;
     @override
     final bool has = false;
-
-    const None();
   }
 ```
 
@@ -667,6 +622,51 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
   } else if (option instanceof Option.None) {
     console.log("got none");
   }
+```
+
+### Traits
+
+* Scala
+
+``` scala
+  trait Similarity {
+    def isSimilar(x: Any): Boolean
+    def isNotSimilar(x: Any): Boolean = !isSimilar(x)
+  }
+```
+
+* Kotlin
+
+``` kotlin
+  interface Similarity {
+    fun isSimilar(x: Any): Boolean
+    fun isNotSimilar(x: Any): Boolean = !isSimilar(x)
+  }
+```
+
+* Rust
+
+``` rust
+  TODO any
+  trait Similarity {
+    fn isSimilar(&self, x: Any) -> bool;
+    fn isNotSimilar(&self, x: Any) -> bool { !isSimilar(x) }
+  }
+```
+
+* Dart
+
+``` dart
+  abstract class Similarity {
+    bool isSimilar(Object x);
+    bool isNotSimilar(Object x) => !isSimilar(x);
+  }
+```
+
+* TypeScript
+
+``` typescript
+  TODO
 ```
 
 ## Library
@@ -893,26 +893,28 @@ lang-sxs is a point-by-point comparision between 5 modern programming languages.
   import 'dart:convert';
 
   class Point {
+    const Point(this.x, this.y);
+
     final double x;
     final double y;
     
-    Point(this.x, this.y);
+    factory Point.fromJson(Map<String, dynamic> json) {
+      return Point(
+        x: json['x'],
+        y: json['y'],
+      );
+    }
 
-    Point.fromJson(Map<String, dynamic> json)
-      : x = json['x'],
-        y  = json['y'];
-
-    Map<String, dynamic> toJson() =>
-      {
+    Map<String, dynamic> toJson() => {
         'x': x,
         'y': y,
       };            
   }
 
   final point = Point(1.0, 2.0);
-  final serialized = jsonEncode(point);
+  final serialized = json.encode(point);
   print("serialized = $serialized");
-  final deserialized = Point.fromJson(jsonDecode(serialized));
+  final deserialized = Point.fromJson(json.decode(serialized));
   print("deserialized = $deserialized");
 ``` 
 

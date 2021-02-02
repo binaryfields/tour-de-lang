@@ -1,9 +1,0 @@
-{
-  "name": "ts-sxs",
-  "version": "1.0.0",
-  "main": "out/Main.js",
-  "dependencies": {
-    "@types/node-fetch": "^1.6.5",
-    "node-fetch": "^2.6.1"
-  }
-}
