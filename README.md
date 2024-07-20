@@ -532,27 +532,16 @@ toure-de-lang is a point-by-point comparision between 5 modern programming langu
 * Dart
 
 ``` dart
-  abstract class Option<T> {
-    T get value;
-    bool get has;
-  }
+  sealed class Option<T> {}
 
   class Some<T> implements Option<T> {
     const Some(this.value);
 
-    @override
     final T value;
-    @override
-    final bool has = true;
   }
 
   class None<T> implements Option<T> {
     const None();
-
-    @override
-    final T value = null;
-    @override
-    final bool has = false;
   }
 ```
 
@@ -607,11 +596,10 @@ toure-de-lang is a point-by-point comparision between 5 modern programming langu
 
 ``` dart
   final option = Some("string");
-  if (option is Some) {
-    print("got value: ${option.value}");
-  } else if (option is None) {
-    print("got none");
-  }
+  final _ = switch (option) {
+    Some (value: final value) => print("got value: ${value}"),
+    None _ => print("got none"), 
+  };
 ```
 
 * TypeScript
